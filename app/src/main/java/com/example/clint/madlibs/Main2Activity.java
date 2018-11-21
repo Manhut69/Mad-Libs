@@ -29,16 +29,21 @@ public class Main2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        InputStream is = getResources().openRawResource(storyIds.get(ThreadLocalRandom.current().nextInt(0, 4)));
-        if (getIntent().getIntExtra("story", 7) != 7) {
-            is = getResources().openRawResource(storyIds.get(getIntent().getIntExtra("story", 0)));
+        if(savedInstanceState != null) {
+            story = (Story) savedInstanceState.getSerializable("story");
         }
-        story = new Story(is);
+        else {
+            InputStream is = getResources().openRawResource(storyIds.get(ThreadLocalRandom.current().nextInt(0, 4)));
+            if (getIntent().getIntExtra("story", 7) != 7) {
+                is = getResources().openRawResource(storyIds.get(getIntent().getIntExtra("story", 0)));
+            }
+            story = new Story(is);
+        }
         button = findViewById(R.id.nextWord);
         textBox = findViewById(R.id.editText);
         textBox.setHint(story.getNextPlaceholder());
         wordCounter = findViewById(R.id.wordsLeft);
-        wordCounter.setText(String.format(Locale.US, "%d words left!", story.getPlaceholderCount()));
+        wordCounter.setText(String.format(Locale.US, "%d Words left!", story.getPlaceholderRemainingCount()));
     }
 
     public void onClick(View v) {
@@ -62,5 +67,11 @@ public class Main2Activity extends AppCompatActivity {
             intent.putExtra("story", story);
             startActivity(intent);
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("story", story);
     }
 }
