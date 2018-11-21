@@ -8,17 +8,61 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/gotoNext"
+        android:id="@+id/storyRandom"
         android:layout_width="match_parent"
         android:layout_height="149dp"
         android:onClick="gotoNext"
-        android:text="BigBertern" />
+        android:text="I want to make a random story!"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="125dp"
-        android:text="Please press the damn button"
+        android:layout_height="wrap_content"
+        android:text="You know you want to press the \n big button ;) \n \n Alternatively, Pick your own:"
         android:textAlignment="center"
-        android:textSize="30sp" />
+        android:textAllCaps="false"
+        android:textSize="22sp"
+        android:textStyle="italic" />
+
+    <android.support.v7.widget.GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/storyTarzan"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:onClick="gotoNext"
+            android:text="Tarzan" />
+
+        <Button
+            android:id="@+id/storyUni"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:onClick="gotoNext"
+            android:text="University"
+            app:layout_column="1"
+            app:layout_row="0" />
+
+        <Button
+            android:id="@+id/storyClothes"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:onClick="gotoNext"
+            android:text="Clothes"
+            app:layout_column="0"
+            app:layout_row="1" />
+
+        <Button
+            android:id="@+id/storyDance"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:onClick="gotoNext"
+            android:text="Dance"
+            app:layout_column="1"
+            app:layout_row="1" />
+    </android.support.v7.widget.GridLayout>
+
 </LinearLayout>
