@@ -1,15 +1,14 @@
 package com.example.clint.madlibs;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -22,9 +21,13 @@ public class Main2Activity extends AppCompatActivity {
     Story story;
     Button button;
     EditText textBox;
-    ArrayList<Integer> storyIds = new ArrayList<>(Arrays.asList(R.raw.madlib1_tarzan, R.raw.madlib2_university, R.raw.madlib3_clothes, R.raw.madlib4_dance));
+    ArrayList<Integer> storyIds = new ArrayList<>(Arrays.asList(R.raw.madlib1_tarzan,
+                                                                R.raw.madlib2_university,
+                                                                R.raw.madlib3_clothes,
+                                                                R.raw.madlib4_dance));
     TextView wordCounter;
 
+    // initialize menu
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,9 +36,12 @@ public class Main2Activity extends AppCompatActivity {
             story = (Story) savedInstanceState.getSerializable("story");
         }
         else {
-            InputStream is = getResources().openRawResource(storyIds.get(ThreadLocalRandom.current().nextInt(0, 4)));
+            InputStream is = getResources().openRawResource(storyIds.get(ThreadLocalRandom.current()
+                                                                    .nextInt(0, 4)));
             if (getIntent().getIntExtra("story", 7) != 7) {
-                is = getResources().openRawResource(storyIds.get(getIntent().getIntExtra("story", 0)));
+                is = getResources().openRawResource(storyIds.get(getIntent()
+                                                            .getIntExtra("story",
+                                                                    0)));
             }
             story = new Story(is);
         }
@@ -43,9 +49,12 @@ public class Main2Activity extends AppCompatActivity {
         textBox = findViewById(R.id.editText);
         textBox.setHint(story.getNextPlaceholder());
         wordCounter = findViewById(R.id.wordsLeft);
-        wordCounter.setText(String.format(Locale.US, "%d Words left!", story.getPlaceholderRemainingCount()));
+        wordCounter.setText(String.format(Locale.US, "%d Words left!",
+                                          story.getPlaceholderRemainingCount()));
     }
 
+    // input words, else go to display activity
+    @SuppressLint("SetTextI18n")
     public void onClick(View v) {
         int wordsLeft = story.getPlaceholderRemainingCount();
         Log.d("Added", textBox.getText().toString());
@@ -69,6 +78,7 @@ public class Main2Activity extends AppCompatActivity {
         }
     }
 
+    // save instance in case of closing or rotating the app
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
